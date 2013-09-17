@@ -39,4 +39,12 @@ class User < ActiveRecord::Base
     })
     return true
   end
+
+  def unsubscribe
+    return true unless subscription
+    result = Braintree::Subscription.cancel(subscription.braintree_id)
+    return false unless result.success?
+    subscription.destroy
+    return true
+  end
 end

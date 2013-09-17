@@ -3,6 +3,8 @@ require "spec_helper"
 describe User do
 
   let(:user) { User.new }
+  let(:subscription) { Subscription.new(braintree_id: "subscription id") }
+  let(:braintree_response) { double("braintree_response").as_null_object }
   
   describe "#subscribe" do
 
@@ -11,8 +13,6 @@ describe User do
     context "The user has a credit card on file" do
 
       let(:credit_card) { CreditCard.new }
-      let(:braintree_response) { double("braintree_response").as_null_object }
-      let(:subscription) { Subscription.new(braintree_id: "subscription id") }
       let(:subscription_attributes) do
         {
           billing_day_of_month:       braintree_response,
@@ -88,6 +88,35 @@ describe User do
 
     it "does nothing if the user has no credit card on file" do
       expect(user.subscribe(plan)).to eq(false)
+    end
+  end
+
+  describe "#unsubscribe" do
+
+    context "The user is subscribed to a plan" do
+
+      before :each do
+        user.stub(subscription: subscription)
+        Braintree::Subscription.stub(:cancel).and_return(braintree_response)
+      end
+
+      it "deletes the subscription in the database if the transaction succeeds" do
+        braintree_response.stub(success?: true)
+        subscription.stub(:destroy)
+        user.unsubscribe
+
+        expect(subscription).to have_received(:destroy)
+      end
+
+      it "does nothing if the transaction fails" do
+        braintree_response.stub(success?: false)
+
+        expect(user.unsubscribe).to eq(false)
+      end
+    end
+
+    it "does nothing if the user has no subscription" do
+      expect(user.unsubscribe).to eq(true)
     end
   end
 end
