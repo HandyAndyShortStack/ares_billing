@@ -6,4 +6,6 @@ class Subscription < ActiveRecord::Base
                   :paid_through_date, :plan_id, :price, :status,
                   :trial_duration, :trial_duration_unit, :trial_period,
                   :user_id, :braintree_id
+
+  belongs_to :user
 end
