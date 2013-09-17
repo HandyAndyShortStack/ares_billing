@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user_id: 1
+  image_url: MyString
+  last_4: MyString
+  token: MyString
+
+two:
+  user_id: 1
+  image_url: MyString
+  last_4: MyString
+  token: MyString

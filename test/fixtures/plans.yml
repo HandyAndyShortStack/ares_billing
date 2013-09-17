@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  braintree_id: MyString
+  billing_frequency: 1
+  currency_iso_code: MyString
+  description: MyText
+  name: MyString
+  number_of_billing_cycles: 1
+  price: 9.99
+  trial_duration: 1
+  trial_duration_unit: MyString
+  trial_period: false
+
+two:
+  braintree_id: MyString
+  billing_frequency: 1
+  currency_iso_code: MyString
+  description: MyText
+  name: MyString
+  number_of_billing_cycles: 1
+  price: 9.99
+  trial_duration: 1
+  trial_duration_unit: MyString
+  trial_period: false

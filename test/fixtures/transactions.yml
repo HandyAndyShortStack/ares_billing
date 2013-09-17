@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  braintree_id: MyString
+  avs_error_response_code: MyString
+  avs_postal_code_response_code: MyString
+  avs_street_address_response_code: MyString
+  amount: 9.99
+  subscription_id: 1
+  credit_card_id: 1
+  currency_iso_code: MyString
+  cvv_response_code: MyString
+  gateway_rejection_reason: MyString
+
+two:
+  braintree_id: MyString
+  avs_error_response_code: MyString
+  avs_postal_code_response_code: MyString
+  avs_street_address_response_code: MyString
+  amount: 9.99
+  subscription_id: 1
+  credit_card_id: 1
+  currency_iso_code: MyString
+  cvv_response_code: MyString
+  gateway_rejection_reason: MyString
