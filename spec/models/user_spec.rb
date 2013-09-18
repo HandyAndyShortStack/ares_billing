@@ -31,7 +31,6 @@ describe User do
           trial_duration:             braintree_response,
           trial_duration_unit:        braintree_response,
           trial_period:               braintree_response,
-          plan_id:                    plan.id
         }
       end
 
