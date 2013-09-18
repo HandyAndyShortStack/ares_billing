@@ -1,7 +1,6 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+# populate the plans table from braintree data
+Braintree::Plan.all.each do |bt_plan|
+  plan = Plan.find_by_braintree_id(bt_plan.id)
+  plan = Plan.create(braintree_id: bt_plan.id) unless plan
+  plan.sync(bt_plan)
+end
