@@ -23,4 +23,12 @@ class Plan < ActiveRecord::Base
       trial_period:             bt_plan.trial_period
     })
   end
+
+  def self.sync
+    Braintree::Plan.all.each do |bt_plan|
+      plan = find_by_braintree_id(bt_plan.id)
+      plan = create(braintree_id: bt_plan.id) unless plan
+      plan.sync(bt_plan)
+    end
+  end
 end
