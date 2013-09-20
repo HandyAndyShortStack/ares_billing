@@ -18,8 +18,7 @@ class User < ActiveRecord::Base
     end
     return false unless result.success?
     create_subscription unless subscription
-    bt_sub = result.subscription
-    subscription.sync(bt_sub)
+    subscription.sync(result.subscription)
     subscription.update_attributes(plan_id: plan.id)
     return true
   end
@@ -36,5 +35,15 @@ class User < ActiveRecord::Base
     transaction = Transaction.find_by_braintree_id(bt_trans.id)
     transaction = create_transaction unless transaction
     transaction.sync(bt_trans)
+  end
+
+  def apply_discount hsh
+    return false unless subscription
+    result = Braintree::Subscription.update(subscription.braintree_id, {
+      discounts: { add: [hsh] }
+    })
+    return false unless result.success?
+    subscription.sync(result.subscription)
+    return true
   end
 end

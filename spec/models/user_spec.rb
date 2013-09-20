@@ -120,6 +120,32 @@ describe User do
   end
 
   describe "#apply_discount" do
-    
+
+    let(:options) do
+      {
+        amount: 100.00,
+        inherited_from_id: "sample name",
+        number_of_billing_cycles: 1
+      }
+    end
+
+    it "applies a discount to the user's subscription if it exists" do
+      user.stub(subscription: subscription)
+      braintree_response.stub(success?: true)
+      subscription.stub(:update_attributes)
+      Braintree::Subscription.stub(:update) do |id, hsh|
+        expect(hsh).to eq({
+          discounts: { add: [options] }
+        })
+        braintree_response
+      end
+      user.apply_discount(options)
+
+      expect(Braintree::Subscription).to have_received(:update)
+    end
+
+    it "does nothing if the user has no subscription" do
+      expect(user.apply_discount(options)).to eq(false)
+    end
   end
 end
