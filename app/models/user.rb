@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   attr_accessible :name
   has_one :subscription
   has_one :credit_card
+  has_many :transactions
 
   def subscribe plan
     return false unless credit_card

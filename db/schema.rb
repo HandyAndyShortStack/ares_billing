@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130917215703) do
+ActiveRecord::Schema.define(:version => 20130920160017) do
 
   create_table "credit_cards", :force => true do |t|
     t.integer  "user_id"
@@ -68,13 +68,13 @@ ActiveRecord::Schema.define(:version => 20130917215703) do
     t.string   "avs_postal_code_response_code"
     t.string   "avs_street_address_response_code"
     t.decimal  "amount"
-    t.integer  "subscription_id"
     t.integer  "credit_card_id"
     t.string   "currency_iso_code"
     t.string   "cvv_response_code"
     t.string   "gateway_rejection_reason"
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
+    t.integer  "user_id"
   end
 
   create_table "users", :force => true do |t|
