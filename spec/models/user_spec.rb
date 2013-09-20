@@ -148,4 +148,26 @@ describe User do
       expect(user.apply_discount(options)).to eq(false)
     end
   end
+
+  describe "#remove_discount" do
+
+    it "removes the specified discount if the user has a subscription" do
+      user.stub(subscription: subscription)
+      braintree_response.stub(success?: true)
+      subscription.stub(:update_attributes)
+      Braintree::Subscription.stub(:update) do |id, hsh|
+        expect(hsh).to eq({
+          discounts: { remove: ["discount id"] }
+        })
+        braintree_response
+      end
+      user.remove_discount "discount id"
+
+      expect(Braintree::Subscription).to have_received(:update)
+    end
+
+    it "does nothing if the user has no subscription" do
+      expect(user.remove_discount("discount id")).to eq(false)
+    end
+  end
 end

@@ -38,9 +38,19 @@ class User < ActiveRecord::Base
   end
 
   def apply_discount hsh
+    update_discounts(add: [hsh])
+  end
+
+  def remove_discount discount_id
+    update_discounts(remove: [discount_id])
+  end
+
+private
+
+  def update_discounts hsh
     return false unless subscription
     result = Braintree::Subscription.update(subscription.braintree_id, {
-      discounts: { add: [hsh] }
+      discounts: hsh
     })
     return false unless result.success?
     subscription.sync(result.subscription)
