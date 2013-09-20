@@ -31,4 +31,10 @@ class User < ActiveRecord::Base
     subscription.destroy
     return true
   end
+
+  def sync_transaction bt_trans
+    transaction = Transaction.find_by_braintree_id(bt_trans.id)
+    transaction = create_transaction unless transaction
+    transaction.sync(bt_trans)
+  end
 end
