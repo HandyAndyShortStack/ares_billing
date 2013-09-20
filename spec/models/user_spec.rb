@@ -118,4 +118,8 @@ describe User do
       expect(user.unsubscribe).to eq(true)
     end
   end
+
+  describe "#apply_discount" do
+    
+  end
 end

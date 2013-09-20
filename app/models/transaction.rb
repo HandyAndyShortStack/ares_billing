@@ -3,7 +3,8 @@ class Transaction < ActiveRecord::Base
                   :avs_postal_code_response_code,
                   :avs_street_address_response_code,
                   :braintree_id, :credit_card_id, :currency_iso_code,
-                  :cvv_response_code, :gateway_rejection_reason, :user_id
+                  :cvv_response_code, :gateway_rejection_reason, :status,
+                  :type, :user_id
   
   belongs_to :user
 
@@ -12,7 +13,7 @@ class Transaction < ActiveRecord::Base
     [
       :amount, :avs_error_response_code, :avs_postal_code_response_code,
       :avs_street_address_response_code, :currency_iso_code,
-      :cvv_response_code, :gateway_rejection_reason,
+      :cvv_response_code, :gateway_rejection_reason, :status, :type
     ].each do |sym|
       attributes[sym] = bt_trans.send(sym) if bt_trans.respond_to?(sym)
     end
